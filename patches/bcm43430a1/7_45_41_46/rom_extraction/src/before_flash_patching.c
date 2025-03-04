@@ -43,9 +43,9 @@
 #include <rates.h>              // rates used to build the ratespec for frame injection
 #include <local_wrapper.h>
 
-
 struct fp_config {
 	unsigned int *target_addr;
+	unsigned int size;
 	unsigned int data_ptr;
 };
 
@@ -55,18 +55,19 @@ unsigned int fp_orig_data_len = (FP_CONFIG_ORIGEND - FP_CONFIG_ORIGBASE) / sizeo
 int
 fp_apply_patches_hook(void)
 {
-	struct fp_config *fpc = (struct fp_config *) FP_CONFIG_ORIGBASE;
-	int i;
+	//struct fp_config *fpc = (struct fp_config *) FP_CONFIG_ORIGBASE;
+	//int i;
 
-	for (i = 0; i < fp_orig_data_len; i++) {
-		fp_orig_data[i][0] = (unsigned int) (fpc)->target_addr;
-		fp_orig_data[i][1] = ((fpc)->target_addr)[0];
-		fp_orig_data[i][2] = ((fpc)->target_addr)[1];
-		fpc++;
-	}
+	//for (i = 0; i < fp_orig_data_len; i++) {
+	//	fp_orig_data[i][0] = (unsigned int) (fpc)->target_addr;
+	//	fp_orig_data[i][1] = ((fpc)->target_addr)[0];
+	//	fp_orig_data[i][2] = ((fpc)->target_addr)[1];
+	//	fpc++;
+	//}
 
-	return fp_apply_patches();
+	//return fp_apply_patches();
+	return 0;
 }
 // Hook call to fp_apply_patches in c_main
-__attribute__((at(0x43e6, "", CHIP_VER_BCM43430a1, FW_VER_7_45_41_46)))
-BPatch(fp_apply_patches, fp_apply_patches_hook);
+//__attribute__((at(0x43e6, "", CHIP_VER_BCM43430a1, FW_VER_7_45_41_46)))
+//BPatch(fp_apply_patches, fp_apply_patches_hook);

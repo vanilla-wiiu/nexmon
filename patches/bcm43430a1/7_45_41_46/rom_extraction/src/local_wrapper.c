@@ -57,10 +57,10 @@ int
 fp_apply_patches(void)
 RETURN_DUMMY
 
-AT(CHIP_VER_BCM43430a1, FW_VER_7_45_41_46, 0x81A2D4)
-int
-wlc_ioctl(void *wlc, int cmd, void *arg, int len, void *wlc_if)
-RETURN_DUMMY
+//AT(CHIP_VER_BCM43430a1, FW_VER_7_45_41_46, 0x81A2D4)
+//int
+//wlc_ioctl(void *wlc, int cmd, void *arg, int len, void *wlc_if)
+//RETURN_DUMMY
 
 
 #undef VOID_DUMMY

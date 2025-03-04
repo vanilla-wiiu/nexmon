@@ -110,15 +110,15 @@ wlc_ioctl_hook(struct wlc_info *wlc, int cmd, char *arg, int len, void *wlc_if)
         // automatically removes flash patches
         case 0x602:
         {
-            unsigned int start_addr = *(unsigned int *) arg;
+            //unsigned int start_addr = *(unsigned int *) arg;
             memcpy(arg, *(char **) arg, len);
-            int i;
-            for (i = 0; i < fp_orig_data_len; i++) {
-                if ((fp_orig_data[i][0] >= start_addr) && (fp_orig_data[i][0] < start_addr + len)) {
-                    ((unsigned int *) arg)[(fp_orig_data[i][0] - start_addr) / 4] = fp_orig_data[i][1];
-                    ((unsigned int *) arg)[(fp_orig_data[i][0] - start_addr) / 4] = fp_orig_data[i][2];
-                }
-            }
+            //int i;
+            //for (i = 0; i < fp_orig_data_len; i++) {
+            //    if ((fp_orig_data[i][0] >= start_addr) && (fp_orig_data[i][0] < start_addr + len)) {
+            //        ((unsigned int *) arg)[(fp_orig_data[i][0] - start_addr) / 4] = fp_orig_data[i][1];
+            //        ((unsigned int *) arg)[(fp_orig_data[i][0] - start_addr) / 4] = fp_orig_data[i][2];
+            //    }
+            //}
             ret = IOCTL_SUCCESS;
             break;
         }
