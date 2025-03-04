@@ -1,5 +1,12 @@
 #include <local_wrapper.h>
 
+void memmove(unsigned char *dst, unsigned char *src, unsigned int size)
+{
+    for (unsigned int i = 0; i < size; i++) {
+        dst[i] = src[i];
+    }
+}
+
 void calc_ptk_and_rotate(byte *addr1, byte *addr2, byte *nonce1, byte *nonce2, byte *pmk, unsigned int pmk_len, byte *output, unsigned int output_len)
 {
     calc_ptk(addr1, addr2, nonce1, nonce2, pmk, pmk_len, output, output_len);
