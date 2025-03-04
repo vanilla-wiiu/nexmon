@@ -127,5 +127,5 @@ wlc_ioctl_hook(struct wlc_info *wlc, int cmd, char *arg, int len, void *wlc_if)
     return ret;
 }
 
-__attribute__((at(0x7a9e4, "", CHIP_VER_BCM4356, FW_VER_7_35_101_5_sta)))
+__attribute__((at(0x1FA9E4, "", CHIP_VER_BCM4356, FW_VER_7_35_101_5_sta)))
 GenericPatch4(wlc_ioctl_hook, wlc_ioctl_hook + 1);
