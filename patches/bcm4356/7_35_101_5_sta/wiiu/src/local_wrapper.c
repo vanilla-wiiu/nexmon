@@ -52,13 +52,6 @@
     #define AT(CHIPVER, FWVER, ADDR)
 #endif
 
-typedef unsigned char byte;
-
-AT(CHIP_VER_BCM4356, FW_VER_7_35_101_5_sta, 0x4d08)
-void
-calk_ptk(byte *addr1, byte *addr2, byte *nonce1, byte *nonce2, byte *pmk, unsigned int pmk_len, byte *output, unsigned int output_len)
-VOID_DUMMY
-
 #undef VOID_DUMMY
 #undef RETURN_DUMMY
 #undef AT

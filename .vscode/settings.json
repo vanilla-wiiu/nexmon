@@ -1,0 +1,30 @@
+{
+    "files.associations": {
+        "array": "c",
+        "string_view": "c",
+        "rope": "c",
+        "span": "c",
+        "stacktrace": "c",
+        "deque": "c",
+        "map": "c",
+        "string": "c",
+        "unordered_map": "c",
+        "vector": "c",
+        "capabilities.h": "c",
+        "random": "c",
+        "queue": "c",
+        "stack": "c",
+        "ranges": "cpp",
+        "bitset": "cpp",
+        "*.ipp": "cpp",
+        "*.inc": "cpp",
+        "common.h": "c",
+        "module.h": "c",
+        "cstdlib": "c",
+        "thread": "cpp",
+        "text_encoding": "cpp",
+        "__locale": "cpp",
+        "locale": "cpp",
+        "patcher.h": "c"
+    }
+}

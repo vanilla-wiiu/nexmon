@@ -17,9 +17,12 @@
 
 ccflags-y += \
 	-I$(NEXMON_ROOT)/patches/driver/brcmfmac_4.9.y-nexmon	\
-	-I$(NEXMON_ROOT)/patches/driver/brcmfmac_4.9.y-nexmon/include
-
-ccflags-$(CONFIG_BRCMDBG)	+= -DDEBUG
+	-I$(NEXMON_ROOT)/patches/driver/brcmfmac_4.9.y-nexmon/include \
+	-DDEBUG \
+	-DCONFIG_BRCM_TRACING \
+	-DCONFIG_BRCMDBG \
+	-DCONFIG_BRCMFMAC_PROTO_BCDC \
+	-DCONFIG_BRCMFMAC_PROTO_MSGBUF
 
 ccflags-y += -D__CHECK_ENDIAN__
 
@@ -37,10 +40,8 @@ brcmfmac-objs += \
 		firmware.o \
 		feature.o \
 		btcoex.o \
-		vendor.o
-brcmfmac-$(CONFIG_BRCMFMAC_PROTO_BCDC) += \
-		bcdc.o
-brcmfmac-$(CONFIG_BRCMFMAC_PROTO_MSGBUF) += \
+		vendor.o \
+		bcdc.o \
 		commonring.o \
 		flowring.o \
 		msgbuf.o
@@ -51,9 +52,9 @@ brcmfmac-$(CONFIG_BRCMFMAC_USB) += \
 		usb.o
 brcmfmac-$(CONFIG_BRCMFMAC_PCIE) += \
 		pcie.o
-brcmfmac-$(CONFIG_BRCMDBG) += \
+brcmfmac-objs += \
 		debug.o
-brcmfmac-$(CONFIG_BRCM_TRACING) += \
+brcmfmac-objs += \
 		tracepoint.o
 brcmfmac-$(CONFIG_OF) += \
 		of.o

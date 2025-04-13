@@ -66,7 +66,7 @@ void __brcmf_err(const char *func, const char *fmt, ...);
 	__brcmf_err(__func__, fmt, ##__VA_ARGS__)
 #endif
 
-#if defined(DEBUG) || defined(CONFIG_BRCM_TRACING)
+#if 1
 __printf(3, 4)
 void __brcmf_dbg(u32 level, const char *func, const char *fmt, ...);
 #define brcmf_dbg(level, fmt, ...)				\
@@ -101,8 +101,6 @@ do {								\
 #define brcmf_dbg_hex_dump(test, data, len, fmt, ...)			\
 do {									\
 	trace_brcmf_hexdump((void *)data, len);				\
-	if (test)							\
-		brcmu_dbg_hex_dump(data, len, fmt, ##__VA_ARGS__);	\
 } while (0)
 
 extern int brcmf_msg_level;
