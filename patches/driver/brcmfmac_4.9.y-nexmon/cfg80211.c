@@ -54,9 +54,9 @@
 #define BRCMF_PNO_SCAN_COMPLETE		1
 #define BRCMF_PNO_SCAN_INCOMPLETE	0
 
-#define WPA_OUI				"\xA4\xC0\xE1"	/* WPA OUI */
+#define WPA_OUI				"\x00\x50\xF2"	/* WPA OUI */
 #define WPA_OUI_TYPE			1
-#define RSN_OUI				"\xA4\xC0\xE1"	/* RSN OUI */
+#define RSN_OUI				"\x00\x0F\xAC"	/* RSN OUI */
 #define	WME_OUI_TYPE			2
 #define WPS_OUI_TYPE			4
 
@@ -2079,8 +2079,6 @@ brcmf_cfg80211_connect(struct wiphy *wiphy, struct net_device *ndev,
 	s32 err = 0;
 	u32 ssid_len;
 
-	brcmf_err("HELLO FROM brcmf_cfg80211_connect\n");
-
 	brcmf_dbg(TRACE, "Enter\n");
 	if (!check_vif_up(ifp->vif))
 		return -EIO;
@@ -2132,7 +2130,7 @@ brcmf_cfg80211_connect(struct wiphy *wiphy, struct net_device *ndev,
 		chanspec = 0;
 	}
 
-	brcmf_err("ie (%p), ie_len (%zd)\n", sme->ie, sme->ie_len);
+	brcmf_dbg(INFO, "ie (%p), ie_len (%zd)\n", sme->ie, sme->ie_len);
 
 	err = brcmf_set_wpa_version(ndev, sme);
 	if (err) {
@@ -2181,7 +2179,7 @@ brcmf_cfg80211_connect(struct wiphy *wiphy, struct net_device *ndev,
 	ext_join_params->ssid_le.SSID_len = cpu_to_le32(ssid_len);
 	memcpy(&ext_join_params->ssid_le.SSID, sme->ssid, ssid_len);
 	if (ssid_len < IEEE80211_MAX_SSID_LEN)
-		brcmf_err("SSID \"%s\", len (%d)\n",
+		brcmf_dbg(CONN, "SSID \"%s\", len (%d)\n",
 			  ext_join_params->ssid_le.SSID, ssid_len);
 
 	/* Set up join scan parameters */
@@ -2224,11 +2222,9 @@ brcmf_cfg80211_connect(struct wiphy *wiphy, struct net_device *ndev,
 	err  = brcmf_fil_bsscfg_data_set(ifp, "join", ext_join_params,
 					 join_params_size);
 	kfree(ext_join_params);
-	if (!err) {
+	if (!err)
 		/* This is it. join command worked, we are done */
-		brcmf_err("DID A JOIN!\n");
 		goto done;
-	}
 
 	/* join command failed, fallback to set ssid */
 	memset(&join_params, 0, sizeof(join_params));
@@ -2249,7 +2245,6 @@ brcmf_cfg80211_connect(struct wiphy *wiphy, struct net_device *ndev,
 	}
 	err = brcmf_fil_cmd_data_set(ifp, BRCMF_C_SET_SSID,
 				     &join_params, join_params_size);
-	brcmf_err("DID A CONNECT!\n");
 	if (err)
 		brcmf_err("BRCMF_C_SET_SSID failed (%d)\n", err);
 
@@ -5685,7 +5680,6 @@ brcmf_bss_connect_done(struct brcmf_cfg80211_info *cfg,
 			set_bit(BRCMF_VIF_STATUS_CONNECTED,
 				&ifp->vif->sme_state);
 		}
-		
 		cfg80211_connect_result(ndev,
 					(u8 *)profile->bssid,
 					conn_info->req_ie,
