@@ -33,8 +33,8 @@ Nexmon is a framework for patching Broadcom Wi-Fi firmware. Since Broadcom chips
      sudo dpkg --add-architecture armhf
      sudo apt-get update
      sudo apt-get install libc6:armhf libisl23:armhf libmpfr6:armhf libmpc3:armhf libstdc++6:armhf
-     sudo ln -s /usr/lib/arm-linux-gnueabihf/libisl.so.23.0.0  /usr/lib/arm-linux-gnueabihf/libisl.so.10
-     sudo ln -s /usr/lib/arm-linux-gnueabihf/libmpfr.so.6.1.0 /usr/lib/arm-linux-gnueabihf/libmpfr.so.4
+     sudo ln -s /usr/lib/arm-linux-gnueabihf/libisl.so.23.*  /usr/lib/arm-linux-gnueabihf/libisl.so.10
+     sudo ln -s /usr/lib/arm-linux-gnueabihf/libmpfr.so.6.* /usr/lib/arm-linux-gnueabihf/libmpfr.so.4
      ```
 
 1. Clone the repository and enter it:
