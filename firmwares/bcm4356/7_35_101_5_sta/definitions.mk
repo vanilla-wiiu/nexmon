@@ -5,7 +5,7 @@ NEXMON_FW_VERSION_NUM=`$(NEXMON_ROOT)/buildtools/scripts/getdefine.sh $(NEXMON_F
 
 NEXMON_ARCH=armv7-r
 
-RAM_FILE=fw_bcmdhd.bin
+RAM_FILE=brcmfmac4356-pcie.bin
 RAMSTART=0x180000
 RAMSIZE=0xC0000
 
