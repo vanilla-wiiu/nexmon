@@ -62,18 +62,13 @@ Nexmon is a framework for patching Broadcom Wi-Fi firmware. Since Broadcom chips
    cd patches/bcm4356/7_35_101_5_sta/wiiu
    ```
 
-1. Compile the firmware:
-    ```
-    make
-    ```
-
 1. Backup the original firmware:
 
    ```
    make backup-firmware
    ```
 
-7. Install the new firmware:
+7. Compile and install the new firmware:
 
    ```
    make install-firmware
