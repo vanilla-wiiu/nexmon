@@ -31,7 +31,7 @@ For the Nintendo Switch running L4T kernel 4.9, you should be able to download t
    - Install and load custom kernel module permanently:
      ```
      sudo rmmod brcmfmac
-     sudo cp brcmfmac.ko /lib/modules/4.9.140-l4t/kernel/drivers/net/wireless/broadcom/brcm80211/brcmfmac/
+     sudo cp brcmfmac.ko /lib/modules/4.9.*/kernel/drivers/net/wireless/broadcom/brcm80211/brcmfmac/
      sudo modprobe brcmfmac
      ```
 
