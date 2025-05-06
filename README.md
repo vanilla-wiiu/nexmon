@@ -6,7 +6,38 @@ Nexmon is a framework for patching Broadcom Wi-Fi firmware. Since Broadcom chips
 
 - BCM4356 (Nintendo Switch)
 
-## How to use?
+## Usage (Nintendo Switch)
+
+For the Nintendo Switch running L4T kernel 4.9, you should be able to download the release files and do the following:
+
+1. Back up the original firmware located at the following location to somewhere safe:
+   ```
+   /lib/firmware/brcm/brcmfmac4356-pcie.bin
+   ```
+
+1. Replace the original firmware:
+   ```
+   sudo cp brcmfmac4356-pcie.bin /lib/firmware/brcm/
+   ```
+
+1. Load the new kernel module:
+   The standard `brcmfmac` kernel module refuses to load custom firmware we installed, so we must use a modified version. This can be loaded temporarily, but upon next boot the original module will refuse to load until the original firmware is restored (or the custom module is once again loaded). Therefore you may find it more convenient to install it permanently. The custom module/firmware should still remain compatible with standard Wi-Fi connections, however there's a chance you will experience degraded network performance due to the lack of Switch-specific patches in our custom firmware.
+   
+   - Load custom kernel module temporarily:
+     ```
+     sudo rmmod brcmfmac
+     sudo insmod brcmfmac.ko
+     ```
+   - Install and load custom kernel module permanently:
+     ```
+     sudo rmmod brcmfmac
+     sudo cp brcmfmac.ko 
+     sudo modprobe brcmfmac
+     ```
+
+You should now be able to use Vanilla as normal.
+
+## Compiling (Nintendo Switch)
 
 1. Open a Terminal. It is recommended to enter root mode to make installation easier using one of the following:
 
