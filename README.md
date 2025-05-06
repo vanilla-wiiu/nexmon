@@ -99,11 +99,13 @@ You should now be able to use Vanilla as normal.
    make backup-firmware
    ```
 
-7. Compile and install the new firmware:
+1. Compile and install the new firmware, and load the custom kernel module:
 
    ```
    make install-firmware
    ```
+
+**NOTE:** This will permanently replace the custom firmware but only temporarily load the custom kernel module. Upon next boot, the original kernel module will be loaded and refuse to load the modified firmware. To remedy this, you should either restore the backup firmware made in step 7 or load/install the custom kernel module again (see Usage section for more details).
 
 ## For more information
 
