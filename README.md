@@ -52,7 +52,7 @@ You should now be able to use Vanilla as normal.
 1. Install the dependencies:
 
    ```
-   apt install linux-headers-$(uname -r) git libgmp3-dev gawk qpdf bison flex make autoconf libtool texinfo
+   apt install git libgmp3-dev gawk qpdf bison flex make autoconf libtool texinfo
    ```
 
    - On 32-bit systems:
@@ -61,12 +61,26 @@ You should now be able to use Vanilla as normal.
      ```
    - On 64-bit systems:
      ```
-     sudo dpkg --add-architecture armhf
-     sudo apt-get update
-     sudo apt-get install libc6:armhf libisl23:armhf libmpfr6:armhf libmpc3:armhf libstdc++6:armhf
-     sudo ln -s /usr/lib/arm-linux-gnueabihf/libisl.so.23.*  /usr/lib/arm-linux-gnueabihf/libisl.so.10
-     sudo ln -s /usr/lib/arm-linux-gnueabihf/libmpfr.so.6.* /usr/lib/arm-linux-gnueabihf/libmpfr.so.4
+     dpkg --add-architecture armhf
+     apt-get update
+     apt-get install libc6:armhf libisl23:armhf libmpfr6:armhf libmpc3:armhf libstdc++6:armhf
+     ln -s /usr/lib/arm-linux-gnueabihf/libisl.so.23.*  /usr/lib/arm-linux-gnueabihf/libisl.so.10
+     ln -s /usr/lib/arm-linux-gnueabihf/libmpfr.so.6.* /usr/lib/arm-linux-gnueabihf/libmpfr.so.4
      ```
+
+1. Fix build scripts:
+
+   L4T comes with kernel headers, however some of the build scripts have been compiled for x86 (likely to facilitate cross-compilation) and need to be recompiled to run on aarch64.
+
+   ```
+   cd /usr/src/linux-headers-4.9.*/scripts/basic
+   make fixdep
+   cd ../mod
+   gcc -c modpost.c -o modpost.o
+   gcc -c file2alias.c -o file2alias.o
+   gcc -c sumversion.c -o sumversion.o
+   gcc modpost.o file2alias.o sumversion.o -o modpost
+   ```
 
 1. Clone the repository and enter it:
 
