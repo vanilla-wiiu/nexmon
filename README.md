@@ -10,7 +10,7 @@ Nexmon is a framework for patching Broadcom Wi-Fi firmware. Since Broadcom chips
 
 For the Nintendo Switch running L4T kernel 4.9, you should be able to download the release files and do the following:
 
-1. Back up the original firmware located at the following location to somewhere safe:
+1. If it exists, back up the original firmware located at the following location to somewhere safe:
    ```
    /lib/firmware/brcm/brcmfmac4356-pcie.bin
    ```
@@ -20,8 +20,13 @@ For the Nintendo Switch running L4T kernel 4.9, you should be able to download t
    sudo cp brcmfmac4356-pcie.bin /lib/firmware/brcm/
    ```
 
+1. Copy the sidecar text file into the same location:
+   ```
+   sudo cp brcmfmac4356-pcie.txt /lib/firmware/brcm/
+   ```
+
 1. Load the new kernel module:
-   The standard `brcmfmac` kernel module refuses to load custom firmware we installed, so we must use a modified version. This can be loaded temporarily, but upon next boot the original module will refuse to load until the original firmware is restored (or the custom module is once again loaded). Therefore you may find it more convenient to install it permanently. The custom module/firmware should still remain compatible with standard Wi-Fi connections, however there's a chance you will experience degraded network performance due to the lack of Switch-specific patches in our custom firmware.
+   The built-in `brcmfmac` kernel module will load the stock firmware, whereas our modified kernel will load our custom firmware. You can load the custom module temporarily, in which case the original will be loaded on reboot, or install it permanently so your installation will always be Wii U-compatible. The custom module/firmware should still remain compatible with standard Wi-Fi connections, however there's a chance you will experience degraded network performance due to the lack of Switch-specific patches in our custom firmware.
    
    - Load custom kernel module temporarily:
      ```
@@ -31,7 +36,7 @@ For the Nintendo Switch running L4T kernel 4.9, you should be able to download t
    - Install and load custom kernel module permanently:
      ```
      sudo rmmod brcmfmac
-     sudo cp brcmfmac.ko /lib/modules/4.9.*/kernel/drivers/net/wireless/broadcom/brcm80211/brcmfmac/
+     sudo cp brcmfmac.ko /lib/modules/$(uname -r)/kernel/drivers/net/wireless/broadcom/brcm80211/brcmfmac/
      sudo modprobe brcmfmac
      ```
 
@@ -64,21 +69,27 @@ You should now be able to use Vanilla as normal.
      dpkg --add-architecture armhf
      apt-get update
      apt-get install libc6:armhf libisl23:armhf libmpfr6:armhf libmpc3:armhf libstdc++6:armhf
-     ln -s /usr/lib/arm-linux-gnueabihf/libisl.so.23.*  /usr/lib/arm-linux-gnueabihf/libisl.so.10
-     ln -s /usr/lib/arm-linux-gnueabihf/libmpfr.so.6.* /usr/lib/arm-linux-gnueabihf/libmpfr.so.4
+     ln -s /usr/lib/arm-linux-gnueabihf/libisl.so.23 /usr/lib/arm-linux-gnueabihf/libisl.so.10
+     ln -s /usr/lib/arm-linux-gnueabihf/libmpfr.so.6 /usr/lib/arm-linux-gnueabihf/libmpfr.so.4
      ```
 
 1. Fix build scripts:
 
-   L4T comes with kernel headers, however some of the build scripts have been compiled for x86 (likely to facilitate cross-compilation) and need to be recompiled to run on aarch64.
+   Firstly, upgrade the system to ensure the L4T kernel headers are installed and up-to-date:
 
    ```
-   cd /usr/src/linux-headers-4.9.*/scripts/basic
-   make fixdep
+   apt upgrade
+   ```
+
+   Next, inexplicably, some of the build scripts have been compiled for x86 (probably to facilitate cross-compilation) and need to be recompiled to run on aarch64:
+
+   ```
+   cd /usr/src/linux-headers-$(uname -r)/scripts/basic
+   make -B fixdep
    cd ../mod
-   gcc -c modpost.c -o modpost.o
-   gcc -c file2alias.c -o file2alias.o
-   gcc -c sumversion.c -o sumversion.o
+   make modpost.o
+   make file2alias.o
+   make sumversion.o
    gcc modpost.o file2alias.o sumversion.o -o modpost
    ```
 
