@@ -8,7 +8,7 @@ Nexmon is a framework for patching Broadcom Wi-Fi firmware. Since Broadcom chips
 
 ## Usage (Nintendo Switch)
 
-For the Nintendo Switch running L4T kernel 4.9, you should be able to download the release files and do the following:
+The release builds have been tested to work with L4T **Ubuntu 24.04**. For other distros, it's recommended you follow the **Compiling** instructions below instead.
 
 1. If it exists, back up the original firmware located at the following location to somewhere safe:
    ```
